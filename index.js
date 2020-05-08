@@ -3,6 +3,7 @@ const app = express()
 const morgan = require('morgan')
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method);
@@ -103,10 +104,9 @@ app.post('/api/persons/', (req, res) => {
     id: Math.floor((Math.random() * 100) + 1),
   }
 
-  console.log(person);
-  
   persons = persons.concat(person)
   res.json(person)
+  // morgan.token('type', function (req, res) { return req.headers['name'] })
 })
 
 const PORT = 3001
