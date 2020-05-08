@@ -19,5 +19,8 @@
   "homepage": "https://github.com/jasylwong/full_stack_open_part3_exercises#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }

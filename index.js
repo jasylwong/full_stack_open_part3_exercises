@@ -2,10 +2,10 @@ const express = require('express')
 const app = express()
 
 app.get('/', (req, res) => 
-  res.send('hello world')
+  res.send('hello world!! This is my phonebook app')
 )
 
-const Port = 3001
-app.listen(port, () => {
-  console.log(`Server running on port ${Port}`)
+const PORT = 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })
