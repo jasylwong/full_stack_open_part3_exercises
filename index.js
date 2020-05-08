@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
   {
     "id": 1,
@@ -37,12 +39,6 @@ app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
-// const generateId = () => {
-//   const MaxId = persons.length === 0 ? 
-//     0 : Math.max(...persons.map(person => person.id))    
-//   return MaxId;
-// }
-
 app.get('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id)
   const person = persons.find(person => person.id === id)
@@ -65,6 +61,37 @@ app.delete('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id)
   persons = persons.filter(person => person.id !== id)
   res.status(204).end()
+})
+
+// const generateId = () => {
+//   const MaxId = persons.length > 0 ? 
+//     Math.max(...persons.map(person => person.id)) : 0    
+//   return MaxId + 1;
+// }
+
+app.post('/api/persons/', (req, res) => {
+  const body = req.body
+
+  if (!body.name) {
+    return res.status(400).json({
+      error: 'name missing'
+    })
+  } else if (!body.number) {
+    return res.status(400).json({
+      error: 'number missing'
+    })
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: Math.floor((Math.random() * 100) + 1),
+  }
+
+  console.log(person);
+  
+  persons = persons.concat(person)
+  res.json(person)
 })
 
 const PORT = 3001
