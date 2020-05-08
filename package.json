@@ -1,0 +1,20 @@
+{
+  "name": "full_stack_open_part3_exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasylwong/full_stack_open_part3_exercises.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasylwong/full_stack_open_part3_exercises/issues"
+  },
+  "homepage": "https://github.com/jasylwong/full_stack_open_part3_exercises#readme"
+}
