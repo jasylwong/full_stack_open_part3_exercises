@@ -93,20 +93,15 @@ app.post('/api/persons/', (req, res) => {
     return res.status(400).json({
       error: 'name missing'
     })
-  } else if (!body.number) {
-    return res.status(400).json({
-      error: 'number missing'
-    })
   }
 
-  const person = {
+  const person = new Person({
     name: body.name,
     number: body.number,
-    id: Math.floor((Math.random() * 100) + 1),
-  }
+  })
 
-  Person.find({ id: '5eb7f0dfb3ba7774abfc7aba' }).then(person => {
-    res.json(person)
+  person.save().then(savedPerson => {
+    res.json(savedPerson.toJSON())
   })
   // morgan.token('type', function (req, res) { return req.headers['name'] })
 })
