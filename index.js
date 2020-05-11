@@ -75,8 +75,9 @@ app.get('/info', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  persons = persons.filter(person => person.id !== id)
+  Person.deleteOne({ _id: req.params.id.toString() }).then(person => {
+    console.log('deleted');
+  })
   res.status(204).end()
 })
 
