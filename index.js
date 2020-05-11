@@ -56,18 +56,15 @@ app.get('/', (req, res) =>
 )
 
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  Person.find({}).then(persons => {
+    res.json(persons.map(person => person.toJSON()))
+  })
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
-    res.json(person)
-  } else {
-    res.status(404).end()
-  }
+  Person.findById(req.params.id).then(person => {
+    res.json(person.toJSON())
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -92,7 +89,7 @@ app.delete('/api/persons/:id', (req, res) => {
 app.post('/api/persons/', (req, res) => {
   const body = req.body
 
-  if (!body.name) {
+  if (!body.name === undefined) {
     return res.status(400).json({
       error: 'name missing'
     })
@@ -108,12 +105,13 @@ app.post('/api/persons/', (req, res) => {
     id: Math.floor((Math.random() * 100) + 1),
   }
 
-  persons = persons.concat(person)
-  res.json(person)
+  Person.find({ id: '5eb7f0dfb3ba7774abfc7aba' }).then(person => {
+    res.json(person)
+  })
   // morgan.token('type', function (req, res) { return req.headers['name'] })
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
