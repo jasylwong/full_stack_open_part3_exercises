@@ -49,9 +49,10 @@ app.get('/info', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-  Person.deleteOne({ _id: req.params.id.toString() }).then(person => {
-    console.log('deleted');
-  })
+  Person.deleteOne({ _id: req.params.id.toString() })
+    .then(person => {
+      console.log('deleted');
+    })
   res.status(204).end()
 })
 
@@ -61,24 +62,46 @@ app.delete('/api/persons/:id', (req, res) => {
 //   return MaxId + 1;
 // }
 
-app.post('/api/persons/', (req, res) => {
+app.post('/api/persons/', (req, res, next) => {
   const body = req.body
 
-  if (!body.name === undefined) {
-    return res.status(400).json({
-      error: 'name missing'
-    })
+  if (!body.name) {
+    return res.status(400).json({ error: 'name missing' })
   }
 
+  if (!body.number) {
+    return res.status(400).json({ error: 'number missing' })
+  }
+  
   const person = new Person({
     name: body.name,
     number: body.number,
   })
+  
+  person.save()
+    .then(savedPerson => {
+      res.json(savedPerson.toJSON())
+    })
+    .catch(error => next(error))
 
-  person.save().then(savedPerson => {
-    res.json(savedPerson.toJSON())
-  })
   // morgan.token('type', function (req, res) { return req.headers['name'] })
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  console.log('got to finding stage')
+  const body = request.body
+  
+  const person = {
+    name: body.name,
+    number: body.number
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+      console.log(updatedPerson);
+      response.json(updatedPerson.toJSON())
+    })
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
