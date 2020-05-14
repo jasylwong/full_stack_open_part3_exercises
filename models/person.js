@@ -20,7 +20,11 @@ const personSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  number: Number,
+  number: {
+    type: Number,
+    required: true,
+    unique: true
+  }
 })
 personSchema.plugin(uniqueValidator)
 
