@@ -10,10 +10,10 @@ app.use(cors())
 app.use(express.static('build'))
 
 const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method);
-  console.log('Path:', request.path);
-  console.log('Body:', request.body);
-  console.log('---');
+  console.log('Method:', request.method)
+  console.log('Path:', request.path)
+  console.log('Body:', request.body)
+  console.log('---')
   next()
 }
 
@@ -23,7 +23,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(requestLogger)
 
-app.get('/', (req, res) => 
+app.get('/', (req, res) =>
   res.send('Hello world!! This is my phonebook app, created using Node.js')
 )
 
@@ -35,10 +35,10 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/api/persons/:id', (req, res, next) => {
   Person.findById(req.params.id)
-  .then(person => {
-    res.json(person.toJSON())
-  })
-  .catch(error => next(error))
+    .then(person => {
+      res.json(person.toJSON())
+    })
+    .catch(error => next(error))
 })
 
 app.get('/info', (req, res) => {
@@ -51,16 +51,10 @@ app.get('/info', (req, res) => {
 app.delete('/api/persons/:id', (req, res) => {
   Person.deleteOne({ _id: req.params.id.toString() })
     .then(person => {
-      console.log('deleted');
+      console.log('deleted')
     })
   res.status(204).end()
 })
-
-// const generateId = () => {
-//   const MaxId = persons.length > 0 ? 
-//     Math.max(...persons.map(person => person.id)) : 0    
-//   return MaxId + 1;
-// }
 
 app.post('/api/persons/', (req, res, next) => {
   const body = req.body
@@ -72,12 +66,10 @@ app.post('/api/persons/', (req, res, next) => {
   if (!body.number) {
     return res.status(400).json({ error: 'number missing' })
   }
-  
   const person = new Person({
     name: body.name,
     number: body.number,
   })
-  
   person.save()
     .then(savedPerson => {
       res.json(savedPerson.toJSON())
@@ -90,7 +82,6 @@ app.post('/api/persons/', (req, res, next) => {
 app.put('/api/persons/:id', (request, response, next) => {
   console.log('got to finding stage')
   const body = request.body
-  
   const person = {
     name: body.name,
     number: body.number
@@ -98,7 +89,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
     .then(updatedPerson => {
-      console.log(updatedPerson);
+      console.log(updatedPerson)
       response.json(updatedPerson.toJSON())
     })
     .catch(error => next(error))

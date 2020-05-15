@@ -4,15 +4,15 @@ require('dotenv').config()
 
 const url = process.env.MONGODB_URI
 
-console.log('connecting to ', url);
+console.log('connecting to ', url)
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
     console.log('successfully connected to MongoDB')
   })
   .catch(error => {
-    console.log('error connecting to MongoDB: ', error.message);
-  }) 
+    console.log('error connecting to MongoDB: ', error.message)
+  })
 
 const personSchema = new mongoose.Schema({
   name: {
@@ -40,7 +40,7 @@ personSchema.set('toJSON', {
 
 module.exports = mongoose.model('Person', personSchema)
 
-// Below lines for if want to test that this file 
+// Below lines for if want to test that this file
 // in isolation can converse with MongoDB
 
 // const Person = mongoose.model('Person', personSchema)

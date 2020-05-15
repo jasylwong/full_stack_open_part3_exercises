@@ -26,9 +26,9 @@ const Person = mongoose.model('Person', personSchema)
 
 if (process.argv.length === 3) {
   Person.find({}).then(response => {
-    console.log('phonebook:');
+    console.log('phonebook:')
     response.forEach(person => {
-      console.log(`${person.name} ${person.number}`);
+      console.log(`${person.name} ${person.number}`)
     })
     mongoose.connection.close()
   })
