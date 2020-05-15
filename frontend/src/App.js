@@ -27,12 +27,12 @@ const App = () => {
       const findId = persons.find(p => p.name === newName).id
       personService.update(findId, newPerson)
         .then(returnedPerson => {
-          setPersons(persons.map(p => (p.id !== findId ? p : returnedPerson)))
+          
         })
         .catch(error => {
-          setErrorMessage(`${newName} has already been removed from server` )
+          console.log(error.response.data)
+          setErrorMessage(`${error.response.data}`)
           setTimeout(() => {setErrorMessage(null)}, 3000)
-          setPersons(persons.filter(p => p.id !== findId))
         })
     } else if (persons.map(person => person.number).includes(newNumber)) {
       window.alert(`The number '${newNumber}' is already used by someone else`)
